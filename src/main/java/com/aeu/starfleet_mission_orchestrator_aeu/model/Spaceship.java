@@ -3,8 +3,6 @@ package com.aeu.starfleet_mission_orchestrator_aeu.model;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.ShipClass;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.ShipStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
