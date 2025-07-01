@@ -27,7 +27,7 @@ public class FleetMember {
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Rank rank;
+    private Rank ranks; //posição hierarquica
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Specialty specialty;
