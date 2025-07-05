@@ -7,6 +7,8 @@ import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberReposito
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class FleetMemberService {
     private final FleetMemberRepository fleetMemberRepository;
@@ -32,6 +34,16 @@ public class FleetMemberService {
 
         FleetMember savedMember = fleetMemberRepository.save(fleetMember);
         return mapToResponseDto(savedMember);
+    }
+    //Busca um membro da frota através do ID
+    @Transactional(readOnly = true)
+    public FleetMemberResponseDto getFleetMemberById(Long id){
+        Optional<FleetMember> memberOptional = fleetMemberRepository.findById(id);
+        if(memberOptional.isEmpty()){
+            throw new IllegalArgumentException("FleetMember not found with ID: " + id);
+
+        }
+        return mapToResponseDto(memberOptional.get());
     }
 
     //Metodo responsável por mapear uma entidade FleetMember para FleetMemberResponseDto
