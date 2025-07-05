@@ -7,7 +7,9 @@ import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberReposito
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FleetMemberService {
@@ -44,6 +46,13 @@ public class FleetMemberService {
 
         }
         return mapToResponseDto(memberOptional.get());
+    }
+    //Metodo responsável por Listar todos os membros da frota
+    @Transactional(readOnly = true)
+    public List<FleetMemberResponseDto> getAllFleetMembers(){
+        return fleetMemberRepository.findAll().stream()
+                .map(this::mapToResponseDto)
+                .collect(Collectors.toList());
     }
 
     //Metodo responsável por mapear uma entidade FleetMember para FleetMemberResponseDto
