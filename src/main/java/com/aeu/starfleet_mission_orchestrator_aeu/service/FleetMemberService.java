@@ -30,7 +30,25 @@ public class FleetMemberService {
         fleetMember.setSpecialty(requestDto.getSpecialty());
         fleetMember.setExperience(requestDto.getExperience());
 
-        FleetMember savedMember = FleetMemberRepository.save(fleetMember);
-        return null;
+        FleetMember savedMember = fleetMemberRepository.save(fleetMember);
+        return mapToResponseDto(savedMember);
+    }
+
+    //Metodo responsável por mapear uma entidade FleetMember para FleetMemberResponseDto
+    private FleetMemberResponseDto mapToResponseDto(FleetMember fleetMember){
+        FleetMemberResponseDto dto = new FleetMemberResponseDto();
+        dto.setId(fleetMember.getId());
+        dto.setName(fleetMember.getName());
+        dto.setUsername(fleetMember.getUsername());
+        dto.setRanks(fleetMember.getRanks());
+        dto.setSpecialty(fleetMember.getSpecialty());
+        dto.setExperience(fleetMember.getExperience());
+
+        if (fleetMember.getCurrentSpaceship() != null){
+            dto.setCurrentSpaceshipId(fleetMember.getCurrentSpaceship().getId());
+            dto.setCurrentSpaceshipName(fleetMember.getCurrentSpaceship().getName());
+        }
+        return dto;
+
     }
 }
