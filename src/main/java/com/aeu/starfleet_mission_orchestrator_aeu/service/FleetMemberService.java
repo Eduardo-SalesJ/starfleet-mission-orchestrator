@@ -3,6 +3,7 @@ package com.aeu.starfleet_mission_orchestrator_aeu.service;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.request.FleetMemberRequestDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.FleetMemberResponseDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.FleetMember;
+import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.Rank;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +43,7 @@ public class FleetMemberService {
     public FleetMemberResponseDto getFleetMemberById(Long id){
         Optional<FleetMember> memberOptional = fleetMemberRepository.findById(id);
         if(memberOptional.isEmpty()){
-            throw new IllegalArgumentException("FleetMember not found with ID: " + id);
+            throw new IllegalArgumentException("Fleet Member not found with ID: " + id);
 
         }
         return mapToResponseDto(memberOptional.get());
@@ -53,6 +54,20 @@ public class FleetMemberService {
         return fleetMemberRepository.findAll().stream()
                 .map(this::mapToResponseDto)
                 .collect(Collectors.toList());
+    }
+    // Esse método rebaixa ou proomove a patente de um membro da frota.
+    @Transactional
+    public FleetMemberResponseDto updateFleetMemberRank(Long id, Rank newRank ){
+        Optional<FleetMember>memberOptional = fleetMemberRepository.findById(id);
+        if (memberOptional.isEmpty()){
+            throw new IllegalArgumentException("Fleet Member not found with ID : " + id);
+        }
+        FleetMember fleetMember = memberOptional.get();
+        fleetMember.setRanks(newRank); // Atualiza a patente.
+
+        FleetMember updateMember = fleetMemberRepository.save(fleetMember);
+        return mapToResponseDto(updateMember);
+
     }
 
     //Metodo responsável por mapear uma entidade FleetMember para FleetMemberResponseDto
