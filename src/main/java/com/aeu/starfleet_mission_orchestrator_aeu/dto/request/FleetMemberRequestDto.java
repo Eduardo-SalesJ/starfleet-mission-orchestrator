@@ -22,7 +22,7 @@ public class FleetMemberRequestDto {
     private Rank ranks;
     @NotNull
     private Specialty specialty;
-    @Min(value = 0)
+    @Min(value = 1)
     private int experience;
 
     public String getName() {
