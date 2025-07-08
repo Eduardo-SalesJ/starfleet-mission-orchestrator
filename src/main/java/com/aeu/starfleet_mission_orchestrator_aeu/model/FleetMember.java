@@ -41,4 +41,55 @@ public class FleetMember {
     @ManyToMany(mappedBy = "crew")
     private List<Mission> missions;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Rank getRanks() {
+        return ranks;
+    }
+
+    public Specialty getSpecialty() {
+        return specialty;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public Spaceship getCurrentSpaceship() {
+        return currentSpaceship;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRanks(Rank ranks) {
+        this.ranks = ranks;
+    }
+
+    public void setSpecialty(Specialty specialty) {
+        this.specialty = specialty;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
 }

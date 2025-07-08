@@ -40,4 +40,12 @@ public class Spaceship {
 
     @OneToMany(mappedBy = "assignedSpaceship", cascade = CascadeType.ALL)
     private List<Mission> missions = new ArrayList<>(); // Missões que esta nave participou
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

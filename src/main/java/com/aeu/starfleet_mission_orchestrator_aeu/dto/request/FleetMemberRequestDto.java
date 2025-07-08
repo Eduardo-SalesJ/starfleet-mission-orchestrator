@@ -16,12 +16,36 @@ public class FleetMemberRequestDto {
     @Size(min = 4,max = 40, message = "The username must be between 4 and 40 characters long")
     private String username;
     @NotBlank
-    @Size(min = 8, message = "Password must be at least 6 characters long")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
     @NotNull
     private Rank ranks;
-    @NotBlank
+    @NotNull
     private Specialty specialty;
     @Min(value = 0)
     private int experience;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Rank getRanks() {
+        return ranks;
+    }
+
+    public Specialty getSpecialty() {
+        return specialty;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
 }
