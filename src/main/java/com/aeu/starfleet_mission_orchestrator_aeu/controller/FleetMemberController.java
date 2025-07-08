@@ -9,9 +9,12 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/members")
@@ -26,5 +29,11 @@ public class FleetMemberController {
                                                                         FleetMemberRequestDto requestDto){
         FleetMemberResponseDto response = fleetMemberService.createFleetMember(requestDto);
                 return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FleetMemberResponseDto>> getAllFleetMembers(){
+        List<FleetMemberResponseDto> responseDto = fleetMemberService.getAllFleetMembers();
+        return ResponseEntity.ok(responseDto);
     }
 }
