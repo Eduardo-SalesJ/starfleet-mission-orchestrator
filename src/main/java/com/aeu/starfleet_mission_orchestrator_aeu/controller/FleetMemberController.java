@@ -2,6 +2,7 @@ package com.aeu.starfleet_mission_orchestrator_aeu.controller;
 
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.request.FleetMemberRequestDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.FleetMemberResponseDto;
+import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.Rank;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberRepository;
 import com.aeu.starfleet_mission_orchestrator_aeu.service.FleetMemberService;
 import jakarta.validation.Valid;
@@ -37,6 +38,15 @@ public class FleetMemberController {
     @GetMapping("/{id}")
     public ResponseEntity<FleetMemberResponseDto>getFleetMemberById(@PathVariable Long id){
         FleetMemberResponseDto responseDto = fleetMemberService.getFleetMemberById(id);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    //Endpoint responsável por promover ou rebaixar a patente do membro
+@PutMapping("/{id}/rank")
+    public ResponseEntity<FleetMemberResponseDto>updateFleetMemberRank(
+            @PathVariable Long id,
+            @RequestParam Rank newRank){
+        FleetMemberResponseDto responseDto = fleetMemberService.updateFleetMemberRank(id, newRank);
         return ResponseEntity.ok(responseDto);
     }
 }
