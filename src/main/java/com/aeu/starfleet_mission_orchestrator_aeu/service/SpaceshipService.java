@@ -1,12 +1,15 @@
 package com.aeu.starfleet_mission_orchestrator_aeu.service;
 
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.request.SpaceshipRequestDto;
+import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.FleetMemberResponseDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.SpaceshipResponseDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.Spaceship;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberRepository;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.SpaceshipRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.stream.Collectors;
 
 @Service
 public class SpaceshipService {
@@ -42,6 +45,21 @@ public class SpaceshipService {
         dto.setCrewCapacity(spaceship.getCrewCapacity());
         dto.setFuelConsumptionPerHour(spaceship.getFuelConsumptionPerHour());
         dto.setStatus(spaceship.getStatus());
+
+        //Lógica para mapear a tripulação atual
+        if (spaceship.getCurrentCrew() != null){
+            dto.setCurrentCrew(spaceship.getCurrentCrew().stream()
+                    .map(fleetMember ->{
+                        FleetMemberResponseDto memberDto = new FleetMemberResponseDto();
+                        memberDto.setId(fleetMember.getId());
+                        memberDto.setUsername(fleetMember.getName());
+                        memberDto.setUsername(fleetMember.getUsername());
+                        memberDto.setRanks(fleetMember.getRanks());
+                        memberDto.setSpecialty(fleetMember.getSpecialty());
+                        return memberDto;
+                        })
+                    .collect(Collectors.toList()));
+        }
 
         return dto;
 
