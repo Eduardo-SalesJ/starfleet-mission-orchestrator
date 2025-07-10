@@ -13,7 +13,7 @@ public class SpaceshipRequestDto {
     @NotBlank
     @Size(min = 2, max = 50)
     private String name;
-    @NotBlank
+    @NotNull
     private ShipClass shipClass;
     @Min(value = 1)
     private int crewCapacity;
