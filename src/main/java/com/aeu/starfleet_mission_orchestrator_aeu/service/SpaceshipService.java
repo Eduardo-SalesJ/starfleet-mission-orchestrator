@@ -1,8 +1,12 @@
 package com.aeu.starfleet_mission_orchestrator_aeu.service;
 
+import com.aeu.starfleet_mission_orchestrator_aeu.dto.request.SpaceshipRequestDto;
+import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.SpaceshipResponseDto;
+import com.aeu.starfleet_mission_orchestrator_aeu.model.Spaceship;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberRepository;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.SpaceshipRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SpaceshipService {
@@ -12,5 +16,20 @@ public class SpaceshipService {
     public SpaceshipService(SpaceshipRepository spaceshipRepository, FleetMemberRepository fleetMemberRepository, FleetMemberRepository fleetMemberRepository1){
         this.spaceshipRepository = spaceshipRepository;
         this.fleetMemberRepository = fleetMemberRepository;
+    }
+    @Transactional
+    public SpaceshipResponseDto createSpaceship(SpaceshipRequestDto requestDto){
+        if (spaceshipRepository.findByName(requestDto.getName()).isPresent()){
+            throw new IllegalArgumentException("Spaceship name '" + requestDto.getName() + "'is already in use ");
+        }
+        Spaceship spaceship = new Spaceship();
+        spaceship.setName(requestDto.getName());
+        spaceship.setShipClass(requestDto.getShipClass());
+        spaceship.setCrewCapacity(requestDto.getCrewCapacity());
+        spaceship.setFuelConsumptionPerHour(requestDto.getFuelConsumptionPerHour());
+        spaceship.setStatus(requestDto.getShipStatus());
+
+        Spaceship savedSpaceship = spaceshipRepository.save(spaceship);
+        return null;
     }
 }
