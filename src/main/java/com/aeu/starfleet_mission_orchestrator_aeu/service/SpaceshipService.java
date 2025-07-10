@@ -33,9 +33,9 @@ public class SpaceshipService {
         spaceship.setStatus(requestDto.getShipStatus());
 
         Spaceship savedSpaceship = spaceshipRepository.save(spaceship);
-        return null;
-
+        return mapToResponseDto(savedSpaceship);
     }
+
     // Método responsável por fazer o mapeamento de MODEL para DTO
     private  SpaceshipResponseDto mapToResponseDto(Spaceship spaceship){
         SpaceshipResponseDto dto = new SpaceshipResponseDto();

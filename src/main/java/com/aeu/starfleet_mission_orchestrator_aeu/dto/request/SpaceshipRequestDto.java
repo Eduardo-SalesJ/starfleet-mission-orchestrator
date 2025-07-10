@@ -22,4 +22,43 @@ public class SpaceshipRequestDto {
     @NotNull
     private ShipStatus shipStatus;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ShipClass getShipClass() {
+        return shipClass;
+    }
+
+    public void setShipClass(ShipClass shipClass) {
+        this.shipClass = shipClass;
+    }
+
+    public int getCrewCapacity() {
+        return crewCapacity;
+    }
+
+    public void setCrewCapacity(int crewCapacity) {
+        this.crewCapacity = crewCapacity;
+    }
+
+    public double getFuelConsumptionPerHour() {
+        return fuelConsumptionPerHour;
+    }
+
+    public void setFuelConsumptionPerHour(double fuelConsumptionPerHour) {
+        this.fuelConsumptionPerHour = fuelConsumptionPerHour;
+    }
+
+    public ShipStatus getShipStatus() {
+        return shipStatus;
+    }
+
+    public void setShipStatus(ShipStatus shipStatus) {
+        this.shipStatus = shipStatus;
+    }
 }
