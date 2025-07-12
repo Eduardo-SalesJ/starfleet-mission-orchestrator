@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/spaceships")
 public class SpaceshipController {
@@ -28,5 +30,9 @@ public class SpaceshipController {
         SpaceshipResponseDto response = spaceshipService.getSpaceshipById(id);
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping
+    public ResponseEntity<List<SpaceshipResponseDto>> getAllSpaceship(){
+        List<SpaceshipResponseDto> responseDto = spaceshipService.getAllSpaceship();
+        return ResponseEntity.ok(responseDto);
+    }
 }

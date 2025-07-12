@@ -10,6 +10,7 @@ import com.aeu.starfleet_mission_orchestrator_aeu.repository.SpaceshipRepository
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,6 +43,13 @@ public class SpaceshipService {
         Spaceship spaceship = spaceshipRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Spaceship not found with ID: " + id));
         return mapToResponseDto(spaceship);
+    }
+    //Listar todas as naves espaciáis
+    @Transactional(readOnly = true)
+    public List<SpaceshipResponseDto> getAllSpaceship(){
+        return spaceshipRepository.findAll().stream()
+                .map(this::mapToResponseDto)
+                .collect(Collectors.toList());
     }
 
     // Método responsável por fazer o mapeamento de MODEL para DTO
