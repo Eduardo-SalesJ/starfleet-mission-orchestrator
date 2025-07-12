@@ -2,14 +2,13 @@ package com.aeu.starfleet_mission_orchestrator_aeu.controller;
 
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.request.SpaceshipRequestDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.SpaceshipResponseDto;
+import com.aeu.starfleet_mission_orchestrator_aeu.service.FleetMemberService;
 import com.aeu.starfleet_mission_orchestrator_aeu.service.SpaceshipService;
 import jakarta.validation.Valid;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/spaceships")
@@ -23,6 +22,11 @@ public class SpaceshipController {
     public ResponseEntity<SpaceshipResponseDto> createSpaceship(@Valid @RequestBody SpaceshipRequestDto requestDto){
         SpaceshipResponseDto response = spaceshipService.createSpaceship(requestDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<SpaceshipResponseDto> getSpaceshipById(@PathVariable Long id){
+        SpaceshipResponseDto response = spaceshipService.getSpaceshipById(id);
+        return ResponseEntity.ok(response);
     }
 
 }

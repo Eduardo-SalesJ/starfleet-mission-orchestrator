@@ -3,6 +3,7 @@ package com.aeu.starfleet_mission_orchestrator_aeu.service;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.request.SpaceshipRequestDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.FleetMemberResponseDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.SpaceshipResponseDto;
+import com.aeu.starfleet_mission_orchestrator_aeu.exception.ResourceNotFoundException;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.Spaceship;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberRepository;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.SpaceshipRepository;
@@ -34,6 +35,13 @@ public class SpaceshipService {
 
         Spaceship savedSpaceship = spaceshipRepository.save(spaceship);
         return mapToResponseDto(savedSpaceship);
+    }
+    //Busca uma nave pelo ID
+    @Transactional(readOnly = true)
+    public SpaceshipResponseDto getSpaceshipById(Long id){
+        Spaceship spaceship = spaceshipRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Spaceship not found with ID: " + id));
+        return mapToResponseDto(spaceship);
     }
 
     // Método responsável por fazer o mapeamento de MODEL para DTO
