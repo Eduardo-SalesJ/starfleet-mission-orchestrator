@@ -5,6 +5,7 @@ import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.FleetMemberRespon
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.SpaceshipResponseDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.exception.ResourceNotFoundException;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.Spaceship;
+import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.ShipStatus;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberRepository;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.SpaceshipRepository;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,16 @@ public class SpaceshipService {
         return spaceshipRepository.findAll().stream()
                 .map(this::mapToResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public SpaceshipResponseDto updateSpaceship(Long id, ShipStatus newStatus){
+        Spaceship spaceship = spaceshipRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Spaceship not found with ID: " + id));
+        spaceship.setStatus(newStatus);
+        Spaceship updatedSpaceship = spaceshipRepository.save(spaceship);
+        return mapToResponseDto(updatedSpaceship);
+
     }
 
     // Método responsável por fazer o mapeamento de MODEL para DTO

@@ -2,10 +2,10 @@ package com.aeu.starfleet_mission_orchestrator_aeu.controller;
 
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.request.SpaceshipRequestDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.SpaceshipResponseDto;
+import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.ShipStatus;
 import com.aeu.starfleet_mission_orchestrator_aeu.service.FleetMemberService;
 import com.aeu.starfleet_mission_orchestrator_aeu.service.SpaceshipService;
 import jakarta.validation.Valid;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,4 +35,12 @@ public class SpaceshipController {
         List<SpaceshipResponseDto> responseDto = spaceshipService.getAllSpaceship();
         return ResponseEntity.ok(responseDto);
     }
+    @PutMapping("/{id}/status")
+    public ResponseEntity<SpaceshipResponseDto> updateSpaceshipStatus(
+            @PathVariable Long id,
+            @RequestParam ShipStatus newStatus){
+        SpaceshipResponseDto responseDto = spaceshipService.updateSpaceship(id,newStatus);
+        return ResponseEntity.ok(responseDto);
+    }
+
 }
