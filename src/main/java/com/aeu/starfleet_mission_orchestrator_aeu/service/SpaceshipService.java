@@ -4,6 +4,7 @@ import com.aeu.starfleet_mission_orchestrator_aeu.dto.request.SpaceshipRequestDt
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.FleetMemberResponseDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.dto.response.SpaceshipResponseDto;
 import com.aeu.starfleet_mission_orchestrator_aeu.exception.ResourceNotFoundException;
+import com.aeu.starfleet_mission_orchestrator_aeu.model.FleetMember;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.Spaceship;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.ShipStatus;
 import com.aeu.starfleet_mission_orchestrator_aeu.repository.FleetMemberRepository;
@@ -61,6 +62,24 @@ public class SpaceshipService {
         Spaceship updatedSpaceship = spaceshipRepository.save(spaceship);
         return mapToResponseDto(updatedSpaceship);
 
+    }
+    // Método responsável por atribuir tripulação a nave espacial
+    @Transactional
+    public SpaceshipResponseDto assignCrewToSpaceship(Long spaceshipId, List<Long> crewMemberIds) {
+        Spaceship spaceship = spaceshipRepository.findById(spaceshipId)
+                .orElseThrow(() -> new ResourceNotFoundException("Spaceship not found with ID: " + spaceshipId));
+        if (spaceship.getStatus() == ShipStatus.ON_MISSION) {
+            throw new IllegalArgumentException("It is not possible to assign crew to a ship on a mission.");
+        }
+        List<FleetMember> newCrew = fleetMemberRepository.findAllById(crewMemberIds);
+
+        if (newCrew.size() != crewMemberIds.size()) {
+            throw new IllegalArgumentException("One or more crew member IDs are invalid.");
+        }
+        if (newCrew.size() > spaceship.getCrewCapacity()) {
+            throw new IllegalArgumentException("The number of crew exceeds the ship's capacity (" + spaceship.getCrewCapacity() + ").");
+        }
+        return null;
     }
 
     // Método responsável por fazer o mapeamento de MODEL para DTO

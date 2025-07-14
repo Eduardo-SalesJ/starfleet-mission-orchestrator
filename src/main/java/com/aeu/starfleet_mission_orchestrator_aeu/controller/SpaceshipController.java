@@ -35,6 +35,7 @@ public class SpaceshipController {
         List<SpaceshipResponseDto> responseDto = spaceshipService.getAllSpaceship();
         return ResponseEntity.ok(responseDto);
     }
+    //Endpoint responsável por alterar o status de uma nave
     @PutMapping("/{id}/status")
     public ResponseEntity<SpaceshipResponseDto> updateSpaceshipStatus(
             @PathVariable Long id,
