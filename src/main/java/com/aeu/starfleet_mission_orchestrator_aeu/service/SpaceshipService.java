@@ -79,7 +79,21 @@ public class SpaceshipService {
         if (newCrew.size() > spaceship.getCrewCapacity()) {
             throw new IllegalArgumentException("The number of crew exceeds the ship's capacity (" + spaceship.getCrewCapacity() + ").");
         }
-        return null;
+
+        //Limpa a tripulação atual e atribui a nova
+        spaceship.getCurrentCrew().forEach(member-> member.setCurrentSpaceship(null)); // Desvincula os antigos.
+        spaceship.getCurrentCrew().clear(); // Faz a limpeza da lista.
+
+        newCrew.forEach(member ->{
+            if(member.getCurrentSpaceship() != null && !member.getCurrentSpaceship().equals(spaceship)){
+                throw new IllegalArgumentException("Member '" + member.getName() + "' is already assigned to another ship." );
+            }
+            member.setCurrentSpaceship(spaceship);
+            spaceship.getCurrentCrew().add(member);
+                });
+        Spaceship updatedSpaceship = spaceshipRepository.save(spaceship);
+        fleetMemberRepository.saveAll(newCrew); // Salva os membros com a nova atribuição de nave
+        return  mapToResponseDto(updatedSpaceship);
     }
 
     // Método responsável por fazer o mapeamento de MODEL para DTO
