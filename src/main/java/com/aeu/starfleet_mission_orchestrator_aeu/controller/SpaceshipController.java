@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/spaceships")
@@ -43,5 +44,16 @@ public class SpaceshipController {
         SpaceshipResponseDto responseDto = spaceshipService.updateSpaceship(id,newStatus);
         return ResponseEntity.ok(responseDto);
     }
-
+    // Endpoint responsável por atribuir tripulantes a uma nave
+    @PutMapping("/{id}/assing-crew")
+    public ResponseEntity<SpaceshipResponseDto> assignCrewToSpaceship(
+            @PathVariable Long id,
+            @RequestBody Map<String, List<Long>> requestBody){
+        List<Long> crewMembersIds = requestBody.get("crewMembersIds");
+        if (crewMembersIds == null || crewMembersIds.isEmpty()){
+            throw new IllegalArgumentException("Crew ID list cannot be empty. ");
+        }
+        SpaceshipResponseDto response = spaceshipService.assignCrewToSpaceship(id, crewMembersIds);
+        return ResponseEntity.ok(response);
+    }
 }
