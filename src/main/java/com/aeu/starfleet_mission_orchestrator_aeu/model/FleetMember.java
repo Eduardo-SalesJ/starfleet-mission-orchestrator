@@ -4,15 +4,12 @@ import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.Rank;
 import com.aeu.starfleet_mission_orchestrator_aeu.model.enums.Specialty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "fleet_members")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FleetMember {
@@ -33,6 +30,15 @@ public class FleetMember {
     private Specialty specialty;
     @Column(nullable = false)
     private int experience;
+
+    public Spaceship getCurrentSpaceship() {
+        return currentSpaceship;
+    }
+
+    public void setCurrentSpaceship(Spaceship currentSpaceship) {
+        this.currentSpaceship = currentSpaceship;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "current_spaceship_id") // ID da nave atual
     private Spaceship currentSpaceship;
@@ -63,10 +69,6 @@ public class FleetMember {
 
     public int getExperience() {
         return experience;
-    }
-
-    public Spaceship getCurrentSpaceship() {
-        return currentSpaceship;
     }
 
     public void setName(String name) {

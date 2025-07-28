@@ -81,10 +81,10 @@ public class SpaceshipService {
         }
 
         //Limpa a tripulação atual e atribui a nova
-        spaceship.getCurrentCrew().forEach(member-> member.setCurrentSpaceship(null)); // Desvincula os antigos.
+        spaceship.getCurrentCrew().forEach(member -> member.setCurrentSpaceship(null)); // Desvincula os antigos.
         spaceship.getCurrentCrew().clear(); // Faz a limpeza da lista.
 
-        newCrew.forEach(member ->{
+        newCrew.forEach(member -> {
             if(member.getCurrentSpaceship() != null && !member.getCurrentSpaceship().equals(spaceship)){
                 throw new IllegalArgumentException("Member '" + member.getName() + "' is already assigned to another ship." );
             }
