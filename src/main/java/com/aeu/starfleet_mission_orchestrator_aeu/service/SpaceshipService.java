@@ -96,6 +96,14 @@ public class SpaceshipService {
         return  mapToResponseDto(updatedSpaceship);
     }
 
+    public SpaceshipResponseDto updateSpaceshipStatus(Long id, ShipStatus newStatus ){
+        Spaceship spaceship = spaceshipRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Spaceship not found with ID: " + id));
+        spaceship.setStatus(newStatus);
+        Spaceship updatedSpaceship = spaceshipRepository.save(spaceship);
+        return mapToResponseDto(updatedSpaceship);
+    }
+
     // Método responsável por fazer o mapeamento de MODEL para DTO
     private  SpaceshipResponseDto mapToResponseDto(Spaceship spaceship){
         SpaceshipResponseDto dto = new SpaceshipResponseDto();
